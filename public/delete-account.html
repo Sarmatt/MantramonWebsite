@@ -14,16 +14,19 @@
 
 <h2>Option 2 - Request deletion from this page</h2>
 <p>If you cannot access the app (for example you uninstalled it), send us a request. We will verify ownership of the account and delete it, normally within 30 days.</p>
-<form class="card" id="f">
+<form class="card" id="f" name="delete-account" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+<input type="hidden" name="form-name" value="delete-account">
+<p style="display:none"><label>Do not fill: <input name="bot-field"></label></p>
 <label for="email">Email used for your account</label>
-<input id="email" type="email" required placeholder="you@example.com">
+<input id="email" name="email" type="email" required placeholder="you@example.com">
 <label for="uid">Nickname or User ID (optional)</label>
-<input id="uid" type="text" placeholder="Helps us find your account faster">
+<input id="uid" name="uid" type="text" placeholder="Helps us find your account faster">
 <label for="prov">Sign-in method</label>
-<select id="prov"><option>Google</option><option>Apple</option><option>Email &amp; password</option><option>Guest</option></select>
-<div class="check"><input id="ok" type="checkbox" required><label for="ok">I understand deletion is permanent and cannot be undone.</label></div>
+<select id="prov" name="provider"><option>Google</option><option>Apple</option><option>Email &amp; password</option><option>Guest</option></select>
+<div class="check"><input id="ok" name="confirm" type="checkbox" required><label for="ok">I understand deletion is permanent and cannot be undone.</label></div>
 <p style="margin-top:18px"><button class="btn danger" type="submit">Send deletion request</button></p>
-<p class="muted" style="margin:0;font-size:.9rem">This opens your email app with a pre-filled message to <a href="mailto:playmantramon@gmail.com">playmantramon@gmail.com</a>. Please send it from the email address of the account.</p>
+<p id="status" class="muted" style="margin:0 0 8px;font-size:.95rem" role="status"></p>
+<p class="muted" style="margin:0;font-size:.9rem">You can also email <a href="mailto:playmantramon@gmail.com">playmantramon@gmail.com</a> from the address of the account.</p>
 </form>
 
 <h2>What gets deleted</h2>
@@ -44,9 +47,11 @@
 <script>
 document.getElementById('f').addEventListener('submit',function(e){
  e.preventDefault();
- var g=function(i){return document.getElementById(i).value;};
- var body='Please delete my Mantramon AR account.\n\nEmail: '+g('email')+'\nNickname/User ID: '+(g('uid')||'-')+'\nSign-in method: '+g('prov')+'\n\nI understand this is permanent.';
- location.href='mailto:playmantramon@gmail.com?subject='+encodeURIComponent('Account deletion request')+'&body='+encodeURIComponent(body);
+ var f=e.target,st=document.getElementById('status'),b=f.querySelector('button');
+ b.disabled=true;st.textContent='Sending...';
+ fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()})
+ .then(function(r){if(!r.ok)throw 0;f.reset();st.textContent='Request sent. We will verify the account and delete it, normally within 30 days.';})
+ .catch(function(){b.disabled=false;st.textContent='Could not send. Please email playmantramon@gmail.com instead.';});
 });
 </script>
 </body></html>
