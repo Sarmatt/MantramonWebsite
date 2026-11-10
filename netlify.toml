@@ -1,0 +1,9 @@
+[build]
+  publish = "public"
+
+# Keep old /public/ URLs working now that the site is served from the root
+[[redirects]]
+  from = "/public/*"
+  to = "/:splat"
+  status = 301
+  force = true
