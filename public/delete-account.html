@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Delete Account - Mantramon AR</title><meta name="description" content="How to delete your Mantramon AR account and associated data."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet"><link rel="icon" href="https://mantramon.s3.amazonaws.com/mantramon-logo-white.png"><link rel="stylesheet" href="/style.css"></head><body>
+<header><div class="wrap"><nav><a class="brand" href="/"><img src="https://mantramon.s3.amazonaws.com/mantramon-logo-white.png" alt="Mantramon"></a><a href="/privacy-policy.html">Privacy Policy</a><a href="/delete-account.html" aria-current="page">Delete Account</a></nav></div></header>
+<main class="wrap">
+<h1>Delete your Mantramon account</h1>
+<p class="muted">App: <strong>Mantramon AR</strong> by Mantramon-Company</p>
+
+<h2>Option 1 - Delete inside the app (fastest)</h2>
+<ol>
+<li>Open <strong>Mantramon AR</strong> and sign in.</li>
+<li>Go to <strong>Settings</strong> and tap <strong>Delete Account</strong>.</li>
+<li>Confirm. If you signed in with Google or Apple you may be asked to re-authenticate once for security.</li>
+</ol>
+
+<h2>Option 2 - Request deletion from this page</h2>
+<p>If you cannot access the app (for example you uninstalled it), send us a request. We will verify ownership of the account and delete it, normally within 30 days.</p>
+<form class="card" id="f">
+<label for="email">Email used for your account</label>
+<input id="email" type="email" required placeholder="you@example.com">
+<label for="uid">Nickname or User ID (optional)</label>
+<input id="uid" type="text" placeholder="Helps us find your account faster">
+<label for="prov">Sign-in method</label>
+<select id="prov"><option>Google</option><option>Apple</option><option>Email &amp; password</option><option>Guest</option></select>
+<div class="check"><input id="ok" type="checkbox" required><label for="ok">I understand deletion is permanent and cannot be undone.</label></div>
+<p style="margin-top:18px"><button class="btn danger" type="submit">Send deletion request</button></p>
+<p class="muted" style="margin:0;font-size:.9rem">This opens your email app with a pre-filled message to <a href="mailto:playmantramon@gmail.com">playmantramon@gmail.com</a>. Please send it from the email address of the account.</p>
+</form>
+
+<h2>What gets deleted</h2>
+<ul>
+<li>Your Firebase Authentication account (email, sign-in provider link, user ID).</li>
+<li>Your game profile and progress stored in Firestore (nickname, avatar, Mantramons, items, achievements, streaks, statistics, chat history).</li>
+</ul>
+
+<h2>What may be retained</h2>
+<ul>
+<li>Purchase records held by Google Play / Apple and legally required transaction records, kept as required by tax and accounting law.</li>
+<li>Anonymous, aggregated analytics and crash logs that cannot identify you.</li>
+<li>Backups, which are purged automatically within about 30 days.</li>
+</ul>
+<p class="note">Deleting your account does not cancel active subscriptions. Cancel them in Google Play or the App Store first. See also our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
+</main>
+<footer><div class="wrap"><a href="/privacy-policy.html">Privacy Policy</a><a href="/delete-account.html">Delete Account</a><a href="mailto:playmantramon@gmail.com">playmantramon@gmail.com</a><div>&copy; 2026 Mantramon-Company</div></div></footer>
+<script>
+document.getElementById('f').addEventListener('submit',function(e){
+ e.preventDefault();
+ var g=function(i){return document.getElementById(i).value;};
+ var body='Please delete my Mantramon AR account.\n\nEmail: '+g('email')+'\nNickname/User ID: '+(g('uid')||'-')+'\nSign-in method: '+g('prov')+'\n\nI understand this is permanent.';
+ location.href='mailto:playmantramon@gmail.com?subject='+encodeURIComponent('Account deletion request')+'&body='+encodeURIComponent(body);
+});
+</script>
+</body></html>
